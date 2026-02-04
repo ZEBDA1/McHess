@@ -276,7 +276,7 @@ export default function AdminDashboard() {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-bold">Commande #{order._id.slice(-8)}</h3>
+                          <h3 className="text-lg font-bold">Commande #{order._id.slice(-8).toUpperCase()}</h3>
                           {getStatusBadge(order.status)}
                         </div>
                         <p className="text-sm text-muted-foreground mb-1">
@@ -284,9 +284,6 @@ export default function AdminDashboard() {
                         </p>
                         <p className="text-sm text-muted-foreground mb-1">
                           Pack: {order.pack_name}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          PayPal: {order.paypal_email}
                         </p>
                         <p className="text-xs text-muted-foreground mt-2">
                           {new Date(order.created_at).toLocaleDateString('fr-FR', {
@@ -298,17 +295,28 @@ export default function AdminDashboard() {
                           })}
                         </p>
                       </div>
-                      <div className="flex flex-col gap-2">
-                        <p className="text-2xl font-bold text-primary text-right">{order.amount}€</p>
+                      <div className="flex flex-col gap-2 items-end">
+                        <p className="text-2xl font-bold text-primary">{order.amount}€</p>
                         {order.status === 'pending' && (
-                          <Button
-                            onClick={() => handleUpdateOrderStatus(order._id, 'delivered')}
-                            className="bg-success text-success-foreground hover:bg-success/90"
-                            size="sm"
-                          >
-                            <CheckCircle className="w-4 h-4 mr-2" />
-                            Marquer livrée
-                          </Button>
+                          <div className="flex gap-2">
+                            <Button
+                              onClick={() => handleUpdateOrderStatus(order._id, 'delivered')}
+                              className="bg-success text-success-foreground hover:bg-success/90"
+                              size="sm"
+                            >
+                              <CheckCircle className="w-4 h-4 mr-2" />
+                              Livrer
+                            </Button>
+                            <Button
+                              onClick={() => handleUpdateOrderStatus(order._id, 'cancelled')}
+                              variant="outline"
+                              size="sm"
+                              className="text-destructive border-destructive hover:bg-destructive hover:text-destructive-foreground"
+                            >
+                              <X className="w-4 h-4 mr-2" />
+                              Annuler
+                            </Button>
+                          </div>
                         )}
                       </div>
                     </div>
