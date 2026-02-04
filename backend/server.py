@@ -262,6 +262,35 @@ async def get_orders_by_email(email: str):
         orders.append(order_helper(order))
     return orders
 
+# Update pack (admin)
+@app.put("/api/admin/packs/{pack_id}")
+async def update_pack(pack_id: str, pack_update: PackUpdate):
+    pack = await db.packs.find_one({"_id": ObjectId(pack_id)})
+    if not pack:
+        raise HTTPException(status_code=404, detail="Pack not found")
+    
+    # Update pack
+    await db.packs.update_one(
+        {"_id": ObjectId(pack_id)},
+        {"$set": {
+            "name": pack_update.name,
+            "description": pack_update.description,
+            "points_range": pack_update.points_range,
+            "price": pack_update.price
+        }}
+    )
+    
+    # Send Telegram notification
+    await send_telegram_notification(
+        f"✏️ <b>Pack Modifié</b>\n"
+        f"📦 Nom: {pack_update.name}\n"
+        f"💰 Nouveau prix: {pack_update.price}€\n"
+        f"📊 Points: {pack_update.points_range}\n"
+        f"📝 Description: {pack_update.description}"
+    )
+    
+    return {"message": "Pack updated successfully"}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
