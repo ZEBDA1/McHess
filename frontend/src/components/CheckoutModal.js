@@ -53,9 +53,8 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
         description: `Numéro de commande : ${orderId}`
       });
       
-      setEmail('');
-      setPaypalEmail('');
-      onClose();
+      setLoading(false);
+      // Don't close automatically - let user read the instructions
       
     } catch (error) {
       console.error('Erreur lors de la création de la commande:', error);
