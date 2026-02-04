@@ -1,75 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
     margin: 0;
-    font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-    font-family:
-        source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 @layer base {
     :root {
+        /* Fast-food inspired color palette - warm, appetizing, energetic */
         --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
+        --foreground: 0 0% 10%;
+        
+        /* Primary: Bold red for appetite and urgency */
+        --primary: 0 85% 55%;
+        --primary-foreground: 0 0% 100%;
+        --primary-hover: 0 85% 48%;
+        
+        /* Secondary: Warm golden yellow for energy and optimism */
+        --secondary: 42 95% 55%;
+        --secondary-foreground: 0 0% 10%;
+        --secondary-hover: 42 95% 48%;
+        
+        /* Accent: Orange for warmth and appetite */
+        --accent: 25 95% 55%;
+        --accent-foreground: 0 0% 100%;
+        
+        /* Muted tones */
+        --muted: 0 0% 96%;
+        --muted-foreground: 0 0% 45%;
+        
+        /* UI Elements */
         --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
+        --card-foreground: 0 0% 10%;
         --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 0 0% 9%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
+        --popover-foreground: 0 0% 10%;
+        --border: 0 0% 90%;
+        --input: 0 0% 90%;
+        --ring: 0 85% 55%;
+        
+        /* Status colors */
+        --success: 142 71% 45%;
+        --success-foreground: 0 0% 100%;
+        --warning: 42 95% 55%;
+        --warning-foreground: 0 0% 10%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        
+        /* Custom gradients for fast-food appeal */
+        --gradient-primary: linear-gradient(135deg, hsl(0 85% 55%), hsl(25 95% 55%));
+        --gradient-secondary: linear-gradient(135deg, hsl(42 95% 55%), hsl(42 95% 65%));
+        --gradient-hero: linear-gradient(135deg, hsl(0 85% 55% / 0.95), hsl(25 95% 55% / 0.9));
+        
+        /* Shadows */
+        --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+        --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+        --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1);
+        --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.1);
+        --shadow-glow: 0 0 20px hsl(0 85% 55% / 0.3);
+        
+        /* Animations */
+        --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        
+        --radius: 0.75rem;
     }
+    
     .dark {
-        --background: 0 0% 3.9%;
+        --background: 0 0% 8%;
         --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
+        --card: 0 0% 12%;
         --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
+        --popover: 0 0% 12%;
         --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
+        --primary: 0 85% 55%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 42 95% 55%;
+        --secondary-foreground: 0 0% 10%;
+        --muted: 0 0% 15%;
+        --muted-foreground: 0 0% 65%;
+        --accent: 25 95% 55%;
+        --accent-foreground: 0 0% 100%;
+        --border: 0 0% 20%;
+        --input: 0 0% 20%;
+        --ring: 0 85% 55%;
     }
 }
 
@@ -79,6 +103,57 @@ code {
     }
     body {
         @apply bg-background text-foreground;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+    }
+}
+
+@layer components {
+    /* Custom button animations */
+    .btn-primary {
+        @apply bg-primary text-primary-foreground hover:bg-[hsl(var(--primary-hover))] transition-all duration-300;
+        @apply shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+    }
+    
+    .btn-secondary {
+        @apply bg-secondary text-secondary-foreground hover:bg-[hsl(var(--secondary-hover))] transition-all duration-300;
+        @apply shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98];
+    }
+    
+    /* Pack card hover effects */
+    .pack-card {
+        @apply transition-all duration-300;
+        @apply hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1;
+    }
+    
+    /* Smooth scroll */
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+@layer utilities {
+    /* Text gradients */
+    .text-gradient-primary {
+        @apply bg-clip-text text-transparent;
+        background-image: var(--gradient-primary);
+    }
+    
+    .text-gradient-secondary {
+        @apply bg-clip-text text-transparent;
+        background-image: var(--gradient-secondary);
+    }
+    
+    /* Background gradients */
+    .bg-gradient-primary {
+        background-image: var(--gradient-primary);
+    }
+    
+    .bg-gradient-hero {
+        background-image: var(--gradient-hero);
     }
 }
 
