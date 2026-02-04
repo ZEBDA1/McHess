@@ -245,9 +245,13 @@ async def create_order(order: OrderCreate):
 
 # Get all orders (admin)
 @app.get("/api/admin/orders")
-async def get_all_orders():
+async def get_all_orders(skip: int = 0, limit: int = 100):
     orders = []
-    async for order in db.orders.find().sort("created_at", -1):
+    projection = {
+        '_id': 1, 'pack_id': 1, 'pack_name': 1, 
+        'customer_email': 1, 'amount': 1, 'status': 1, 'created_at': 1
+    }
+    async for order in db.orders.find({}, projection).sort("created_at", -1).skip(skip).limit(limit):
         orders.append(order_helper(order))
     return orders
 
