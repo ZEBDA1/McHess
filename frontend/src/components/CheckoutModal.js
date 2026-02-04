@@ -152,19 +152,21 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
             <Button
               type="button"
               variant="outline"
-              onClick={onClose}
+              onClick={handleClose}
               className="flex-1"
               disabled={loading}
             >
-              Annuler
+              {orderNumber ? 'Fermer' : 'Annuler'}
             </Button>
-            <Button
-              type="submit"
-              className="flex-1 bg-primary text-primary-foreground hover:bg-[hsl(var(--primary-hover))]"
-              disabled={loading}
-            >
-              {loading ? 'Traitement...' : orderNumber ? 'Fermer' : 'Créer la commande'}
-            </Button>
+            {!orderNumber && (
+              <Button
+                type="submit"
+                className="flex-1 bg-primary text-primary-foreground hover:bg-[hsl(var(--primary-hover))]"
+                disabled={loading}
+              >
+                {loading ? 'Traitement...' : 'Créer la commande'}
+              </Button>
+            )}
           </div>
         </form>
       </DialogContent>
