@@ -33,6 +33,14 @@ export const Navbar = () => {
             <Link to="/mes-commandes" className="text-foreground hover:text-primary transition-colors duration-200 font-medium">
               Mes Commandes
             </Link>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              className="rounded-full"
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </Button>
             <Link to="/admin">
               <Button variant="outline" size="sm">
                 Admin
