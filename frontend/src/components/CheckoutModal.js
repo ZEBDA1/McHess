@@ -104,24 +104,36 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
             </div>
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="paypal">Email PayPal</Label>
-            <div className="relative">
-              <CreditCard className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
-                id="paypal"
-                type="email"
-                placeholder="paypal@email.com"
-                value={paypalEmail}
-                onChange={(e) => setPaypalEmail(e.target.value)}
-                className="pl-10"
-                required
-              />
+          {orderNumber && (
+            <div className="p-4 bg-primary/10 border-2 border-primary rounded-xl space-y-3">
+              <h3 className="font-bold text-lg">Instructions de Paiement PayPal</h3>
+              
+              <div className="space-y-2 text-sm">
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold min-w-[100px]">Montant:</span>
+                  <span className="font-bold text-primary text-lg">{pack.price}€</span>
+                </div>
+                
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold min-w-[100px]">Envoyer à:</span>
+                  <span className="font-mono bg-background px-2 py-1 rounded">zebdalerat@protonmail.com</span>
+                </div>
+                
+                <div className="flex items-start gap-2">
+                  <span className="font-semibold min-w-[100px]">N° Commande:</span>
+                  <span className="font-mono bg-background px-2 py-1 rounded font-bold text-primary">
+                    {orderNumber}
+                  </span>
+                </div>
+              </div>
+              
+              <div className="mt-3 p-3 bg-warning/10 border border-warning/30 rounded-lg">
+                <p className="text-xs font-semibold text-warning-foreground">
+                  ⚠️ IMPORTANT: Ajoutez le numéro de commande dans la note du paiement PayPal
+                </p>
+              </div>
             </div>
-            <p className="text-xs text-muted-foreground">
-              Paiement via PayPal Friends & Family
-            </p>
-          </div>
+          )}
           
           <div className="flex gap-3 pt-4">
             <Button
@@ -138,7 +150,7 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
               className="flex-1 bg-primary text-primary-foreground hover:bg-[hsl(var(--primary-hover))]"
               disabled={loading}
             >
-              {loading ? 'Traitement...' : 'Procéder au paiement'}
+              {loading ? 'Traitement...' : orderNumber ? 'Fermer' : 'Créer la commande'}
             </Button>
           </div>
         </form>
