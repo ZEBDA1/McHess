@@ -33,10 +33,14 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
         customer_email: email
       });
 
+      const orderId = response.data.order_id.slice(-8).toUpperCase();
+      setOrderNumber(orderId);
+
       // Store order ID in localStorage for order tracking
       const orders = JSON.parse(localStorage.getItem('myOrders') || '[]');
       orders.push({
         orderId: response.data.order_id,
+        orderNumber: orderId,
         email: email,
         pack: pack.name,
         amount: pack.price,
@@ -46,7 +50,7 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
       localStorage.setItem('myOrders', JSON.stringify(orders));
       
       toast.success('Commande créée avec succès !', {
-        description: `Numéro de commande : ${response.data.order_id.slice(-8)}`
+        description: `Numéro de commande : ${orderId}`
       });
       
       setEmail('');
