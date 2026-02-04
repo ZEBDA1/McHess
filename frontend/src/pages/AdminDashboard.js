@@ -168,14 +168,24 @@ export default function AdminDashboard() {
                 Mc<span className="text-primary">Hess</span> <span className="text-muted-foreground text-sm">Admin</span>
               </span>
             </div>
-            <Button
-              variant="outline"
-              onClick={handleLogout}
-              className="gap-2"
-            >
-              <LogOut className="w-4 h-4" />
-              Déconnexion
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+                className="rounded-full"
+              >
+                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleLogout}
+                className="gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                Déconnexion
+              </Button>
+            </div>
           </div>
         </div>
       </header>
