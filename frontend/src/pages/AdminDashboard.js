@@ -31,13 +31,16 @@ const API = `${BACKEND_URL}/api`;
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [packs, setPacks] = useState([]);
   const [orders, setOrders] = useState([]);
   const [stats, setStats] = useState({
     totalOrders: 0,
     pendingOrders: 0,
-    totalRevenue: 0
+    totalRevenue: 0,
+    deliveredOrders: 0,
+    cancelledOrders: 0
   });
   const [editingPack, setEditingPack] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
