@@ -21,15 +21,16 @@ app.add_middleware(
 
 # MongoDB connection
 MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
+DB_NAME = os.environ.get('DB_NAME', 'mchess_db')
 client = AsyncIOMotorClient(MONGO_URL)
-db = client.mchess_db
+db = client[DB_NAME]
 
 # Telegram Bot Configuration
-TELEGRAM_BOT_TOKEN = "8516166880:AAGlpynk5uHEXbCNEukGK8VwG67WCS1J4ao"
+TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
 TELEGRAM_CHAT_ID = None  # Will be obtained from first message - check logs
 
 # PayPal Configuration
-PAYPAL_EMAIL = "zebdalerat@protonmail.com"
+PAYPAL_EMAIL = os.environ.get('PAYPAL_EMAIL', '')
 
 # Pydantic models
 class Pack(BaseModel):
