@@ -20,6 +20,12 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    if (orderNumber) {
+      // Modal already has instructions, just close
+      handleClose();
+      return;
+    }
+    
     if (!email) {
       toast.error('Veuillez entrer votre email');
       return;
@@ -53,15 +59,19 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
         description: `Numéro de commande : ${orderId}`
       });
       
-      setLoading(false);
-      // Don't close automatically - let user read the instructions
-      
     } catch (error) {
       console.error('Erreur lors de la création de la commande:', error);
-      toast.error('Erreur lors de la création de la commande');
+      const errorMsg = error.response?.data?.detail || 'Erreur lors de la création de la commande';
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleClose = () => {
+    setEmail('');
+    setOrderNumber('');
+    onClose();
   };
 
   return (
