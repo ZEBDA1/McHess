@@ -1,0 +1,315 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingBag,
+  Users,
+  Settings,
+  LogOut,
+  Plus,
+  Edit,
+  Trash2,
+  CheckCircle,
+  Clock,
+  DollarSign
+} from 'lucide-react';
+import { Button } from '../components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { toast } from 'sonner';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
+
+export default function AdminDashboard() {
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [packs, setPacks] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [stats, setStats] = useState({
+    totalOrders: 0,
+    pendingOrders: 0,
+    totalRevenue: 0
+  });
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      navigate('/admin');
+      return;
+    }
+    
+    fetchData();
+  }, [navigate]);
+
+  const fetchData = async () => {
+    try {
+      const [packsRes, ordersRes] = await Promise.all([
+        axios.get(`${API}/packs`),
+        axios.get(`${API}/admin/orders`)
+      ]);
+      
+      setPacks(packsRes.data);
+      setOrders(ordersRes.data);
+      
+      // Calculate stats
+      const pending = ordersRes.data.filter(o => o.status === 'pending').length;
+      const revenue = ordersRes.data.reduce((sum, o) => sum + o.amount, 0);
+      
+      setStats({
+        totalOrders: ordersRes.data.length,
+        pendingOrders: pending,
+        totalRevenue: revenue
+      });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      toast.error('Erreur lors du chargement des données');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    toast.success('Déconnexion réussie');
+    navigate('/admin');
+  };
+
+  const handleUpdateOrderStatus = async (orderId, newStatus) => {
+    try {
+      await axios.put(`${API}/admin/orders/${orderId}`, {
+        status: newStatus
+      });
+      
+      toast.success('Statut mis à jour avec succès');
+      fetchData();
+    } catch (error) {
+      console.error('Error updating order:', error);
+      toast.error('Erreur lors de la mise à jour');
+    }
+  };
+
+  const getStatusBadge = (status) => {
+    if (status === 'delivered') {
+      return (
+        <Badge className="bg-success text-success-foreground">
+          <CheckCircle className="w-3 h-3 mr-1" />
+          Livrée
+        </Badge>
+      );
+    }
+    return (
+      <Badge className="bg-warning text-warning-foreground">
+        <Clock className="w-3 h-3 mr-1" />
+        En attente
+      </Badge>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="bg-card border-b border-border sticky top-0 z-40">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-md">
+                <span className="text-xl font-bold text-white">M</span>
+              </div>
+              <span className="text-xl font-bold">
+                Mc<span className="text-primary">Hess</span> <span className="text-muted-foreground text-sm">Admin</span>
+              </span>
+            </div>
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              className="gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Déconnexion
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-8">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-grid">
+            <TabsTrigger value="dashboard" className="gap-2">
+              <LayoutDashboard className="w-4 h-4" />
+              Tableau de bord
+            </TabsTrigger>
+            <TabsTrigger value="orders" className="gap-2">
+              <ShoppingBag className="w-4 h-4" />
+              Commandes
+            </TabsTrigger>
+            <TabsTrigger value="packs" className="gap-2">
+              <Package className="w-4 h-4" />
+              Packs
+            </TabsTrigger>
+          </TabsList>
+
+          {/* Dashboard Tab */}
+          <TabsContent value="dashboard" className="space-y-6">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">Tableau de bord</h2>
+              <p className="text-muted-foreground">Vue d'ensemble de votre activité</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card className="border-2">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Total Commandes
+                  </CardTitle>
+                  <ShoppingBag className="w-4 h-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold">{stats.totalOrders}</div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    En attente
+                  </CardTitle>
+                  <Clock className="w-4 h-4 text-warning" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-warning">{stats.pendingOrders}</div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2">
+                <CardHeader className="flex flex-row items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Revenu Total
+                  </CardTitle>
+                  <DollarSign className="w-4 h-4 text-success" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-success">{stats.totalRevenue.toFixed(2)}€</div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Recent Orders */}
+            <Card className="border-2">
+              <CardHeader>
+                <CardTitle>Dernières commandes</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {orders.slice(0, 5).map((order) => (
+                    <div key={order._id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                      <div>
+                        <p className="font-semibold">{order.customer_email}</p>
+                        <p className="text-sm text-muted-foreground">Pack: {order.pack_name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(order.created_at).toLocaleDateString('fr-FR')}
+                        </p>
+                      </div>
+                      <div className="text-right flex items-center gap-4">
+                        <div>
+                          <p className="font-bold text-primary">{order.amount}€</p>
+                          {getStatusBadge(order.status)}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Orders Tab */}
+          <TabsContent value="orders" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-3xl font-bold mb-2">Commandes</h2>
+                <p className="text-muted-foreground">Gérez toutes vos commandes</p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {orders.map((order) => (
+                <Card key={order._id} className="border-2">
+                  <CardContent className="p-6">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="text-lg font-bold">Commande #{order._id.slice(-8)}</h3>
+                          {getStatusBadge(order.status)}
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-1">
+                          Client: {order.customer_email}
+                        </p>
+                        <p className="text-sm text-muted-foreground mb-1">
+                          Pack: {order.pack_name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          PayPal: {order.paypal_email}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          {new Date(order.created_at).toLocaleDateString('fr-FR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </p>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <p className="text-2xl font-bold text-primary text-right">{order.amount}€</p>
+                        {order.status === 'pending' && (
+                          <Button
+                            onClick={() => handleUpdateOrderStatus(order._id, 'delivered')}
+                            className="bg-success text-success-foreground hover:bg-success/90"
+                            size="sm"
+                          >
+                            <CheckCircle className="w-4 h-4 mr-2" />
+                            Marquer livrée
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* Packs Tab */}
+          <TabsContent value="packs" className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-3xl font-bold mb-2">Packs</h2>
+                <p className="text-muted-foreground">Gérez vos packs de points</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {packs.map((pack) => (
+                <Card key={pack._id} className="border-2">
+                  <CardHeader>
+                    <CardTitle className="text-xl">{pack.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <p className="text-sm text-muted-foreground">{pack.description}</p>
+                      <p className="text-sm font-semibold">Points: {pack.points_range}</p>
+                      <p className="text-2xl font-bold text-primary">{pack.price}€</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+}
