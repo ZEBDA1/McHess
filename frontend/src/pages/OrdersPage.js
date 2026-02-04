@@ -52,6 +52,14 @@ export default function OrdersPage() {
         </Badge>
       );
     }
+    if (status === 'cancelled') {
+      return (
+        <Badge className="bg-destructive text-destructive-foreground">
+          <X className="w-3 h-3 mr-1" />
+          Annulée
+        </Badge>
+      );
+    }
     return (
       <Badge className="bg-warning text-warning-foreground">
         <Clock className="w-3 h-3 mr-1" />
