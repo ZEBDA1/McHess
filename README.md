@@ -158,6 +158,30 @@ yarn start
 
 ## 🔧 Configuration du Bot Telegram
 
+### Méthode Simple (Recommandée)
+```bash
+# 1. Cherchez @mchesss_bot sur Telegram
+# 2. Envoyez un message (ex: "/start" ou "Bonjour")
+# 3. Créez une commande sur le site pour tester
+# 4. Vérifiez que vous recevez la notification !
+```
+
+Le système détecte automatiquement votre Chat ID dès que vous envoyez un message au bot.
+
+### Vérification
+```bash
+# Voir les logs pour confirmation
+sudo supervisorctl tail -50 backend stdout
+
+# Vous devriez voir:
+# ✅ TELEGRAM_CHAT_ID obtained: [votre_chat_id]
+# ✅ Telegram notification sent successfully
+```
+
+Pour plus de détails, consultez `/app/TELEGRAM_CONFIG_COMPLETE.md`
+
+## 🛠️ Configuration
+
 ### Étape 1 : Créer un Bot Telegram
 1. Ouvrez Telegram et cherchez **@BotFather**
 2. Envoyez `/newbot`
