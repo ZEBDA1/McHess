@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the McHess loyalty points website thoroughly. This is a French fast-food themed e-commerce site for buying loyalty points."
+user_problem_statement: "Test the new features added to McHess website. Focus on testing: 1) New Checkout Flow (PayPal Instructions), 2) Cancel Order Feature, 3) Admin Pack Editing."
 
 frontend:
   - task: "Homepage Hero Section"
