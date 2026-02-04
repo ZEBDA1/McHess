@@ -136,7 +136,7 @@ export default function OrdersPage() {
                               {getStatusBadge(order.status)}
                             </div>
                             <p className="text-sm text-muted-foreground mb-1">
-                              Commande #{order.orderId}
+                              Commande #{order.orderNumber || order.orderId}
                             </p>
                             <p className="text-sm text-muted-foreground">
                               {new Date(order.date).toLocaleDateString('fr-FR', {
@@ -148,8 +148,19 @@ export default function OrdersPage() {
                               })}
                             </p>
                           </div>
-                          <div className="text-right">
+                          <div className="text-right flex flex-col gap-2">
                             <p className="text-2xl font-bold text-primary">{order.amount}€</p>
+                            {order.status === 'pending' && (
+                              <Button
+                                onClick={() => handleCancelOrder(order)}
+                                variant="outline"
+                                size="sm"
+                                className="text-destructive border-destructive hover:bg-destructive hover:text-destructive-foreground"
+                              >
+                                <X className="w-4 h-4 mr-2" />
+                                Annuler
+                              </Button>
+                            )}
                           </div>
                         </div>
                       </CardContent>
