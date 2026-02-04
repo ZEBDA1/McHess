@@ -67,7 +67,6 @@ def order_helper(order) -> dict:
         "pack_id": str(order["pack_id"]),
         "pack_name": order.get("pack_name", ""),
         "customer_email": order["customer_email"],
-        "paypal_email": order["paypal_email"],
         "amount": order["amount"],
         "status": order["status"],
         "created_at": order["created_at"].isoformat() if isinstance(order["created_at"], datetime) else order["created_at"]
