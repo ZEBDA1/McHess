@@ -192,7 +192,6 @@ async def create_order(order: OrderCreate):
         "pack_id": ObjectId(order.pack_id),
         "pack_name": pack["name"],
         "customer_email": order.customer_email,
-        "paypal_email": order.paypal_email,
         "amount": pack["price"],
         "status": "pending",
         "created_at": datetime.utcnow()
@@ -200,6 +199,7 @@ async def create_order(order: OrderCreate):
     
     result = await db.orders.insert_one(order_data)
     order_id = str(result.inserted_id)
+    order_number = order_id[-8:].upper()
     
     # Send Telegram notification
     await send_telegram_notification(
@@ -207,7 +207,8 @@ async def create_order(order: OrderCreate):
         f"📦 Pack: {pack['name']}\n"
         f"💰 Montant: {pack['price']}€\n"
         f"📧 Client: {order.customer_email}\n"
-        f"🆔 ID: {order_id[-8:]}\n"
+        f"🆔 N° Commande: {order_number}\n"
+        f"💳 À payer sur: {PAYPAL_EMAIL}\n"
         f"⏳ Statut: En attente"
     )
     
