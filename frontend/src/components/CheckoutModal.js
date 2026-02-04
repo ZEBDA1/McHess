@@ -12,8 +12,8 @@ const API = `${BACKEND_URL}/api`;
 
 export const CheckoutModal = ({ isOpen, onClose, pack }) => {
   const [email, setEmail] = useState('');
-  const [paypalEmail, setPaypalEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const [orderNumber, setOrderNumber] = useState('');
 
   if (!pack) return null;
 
