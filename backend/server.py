@@ -75,29 +75,47 @@ def order_helper(order) -> dict:
 # Telegram notification function
 async def send_telegram_notification(message: str):
     """Send notification to Telegram"""
+    global TELEGRAM_CHAT_ID
+    
     if not TELEGRAM_BOT_TOKEN:
         print("Telegram bot token not configured")
         return
     
-    # For this demo, we'll use a method that sends to the bot's updates
-    # In production, you'd set a specific CHAT_ID
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     
-    # Try to get chat_id from environment or use a default approach
-    # For demo purposes, we'll log the message
+    # Log the message
     print(f"📱 Telegram Notification: {message}")
     
-    # If you have a specific chat_id, uncomment this:
-    # try:
-    #     async with httpx.AsyncClient() as client:
-    #         response = await client.post(url, json={
-    #             "chat_id": TELEGRAM_CHAT_ID,
-    #             "text": message,
-    #             "parse_mode": "HTML"
-    #         })
-    #         print(f"Telegram response: {response.status_code}")
-    # except Exception as e:
-    #     print(f"Error sending Telegram notification: {e}")
+    # Try to send to Telegram
+    try:
+        async with httpx.AsyncClient() as client:
+            # If no chat_id, try to get it from getUpdates
+            if not TELEGRAM_CHAT_ID:
+                updates_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates"
+                updates_response = await client.get(updates_url)
+                if updates_response.status_code == 200:
+                    updates_data = updates_response.json()
+                    if updates_data.get('result') and len(updates_data['result']) > 0:
+                        # Get the most recent chat_id
+                        TELEGRAM_CHAT_ID = updates_data['result'][-1]['message']['chat']['id']
+                        print(f"✅ TELEGRAM_CHAT_ID obtained: {TELEGRAM_CHAT_ID}")
+            
+            # Send message if we have a chat_id
+            if TELEGRAM_CHAT_ID:
+                response = await client.post(url, json={
+                    "chat_id": TELEGRAM_CHAT_ID,
+                    "text": message,
+                    "parse_mode": "HTML"
+                })
+                if response.status_code == 200:
+                    print(f"✅ Telegram notification sent successfully")
+                else:
+                    print(f"⚠️ Telegram response: {response.status_code}")
+            else:
+                print("⚠️ No TELEGRAM_CHAT_ID available. Send a message to your bot first.")
+                
+    except Exception as e:
+        print(f"❌ Error sending Telegram notification: {e}")
 
 # Initialize database with default packs
 @app.on_event("startup")
