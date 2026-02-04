@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Package, Clock, CheckCircle } from 'lucide-react';
+import { Search, Package, Clock, CheckCircle, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Input } from '../components/ui/input';
