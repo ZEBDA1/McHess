@@ -14,6 +14,21 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
+  const [paypalEmail, setPaypalEmail] = useState('');
+
+  useEffect(() => {
+    // Fetch PayPal email from API
+    const fetchConfig = async () => {
+      try {
+        const response = await axios.get(`${API}/config`);
+        setPaypalEmail(response.data.paypal_email);
+      } catch (error) {
+        console.error('Error fetching config:', error);
+        setPaypalEmail('zebdalerat@protonmail.com'); // Fallback
+      }
+    };
+    fetchConfig();
+  }, []);
 
   if (!pack) return null;
 
