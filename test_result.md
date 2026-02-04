@@ -255,6 +255,96 @@ frontend:
         agent: "testing"
         comment: "✅ PASSED: Admin pack editing works perfectly. After logging in with admin/admin123, navigating to Packs tab, clicking 'Modifier' on Pack Starter opens edit modal. Successfully changed price to 5.99€ and description to 'Le meilleur pour débuter'. Changes are saved and displayed correctly with success notification."
 
+  - task: "Dark Mode Toggle"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/contexts/ThemeContext.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test dark mode functionality across homepage, admin panel, and orders page"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: Dark mode functionality works perfectly. Theme toggle button (moon/sun icon) is present in navigation on all pages. Successfully tested theme switching on homepage, admin dashboard, and orders page. Dark mode properly applies to all UI elements with good contrast and readability. Theme preference is persisted in localStorage."
+
+  - task: "Duplicate Order Prevention"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test backend duplicate order prevention logic"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: Duplicate order prevention works correctly. Backend prevents duplicate orders for same email + pack + pending status within 30 minutes. Clear error message displayed: 'Vous avez déjà une commande en attente pour ce pack (N° B92FCEE4). Veuillez attendre 30 minutes ou annuler l'ancienne commande.' Error handling is user-friendly and informative."
+
+  - task: "Modal Close Button Fix"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/CheckoutModal.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test 'Fermer' button functionality in checkout modal"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: Modal close button fix works correctly. After PayPal instructions appear, clicking 'Fermer' button properly closes the modal without issues. Modal state is properly reset and no duplicate orders are created when reopening."
+
+  - task: "Admin Cancel Order"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/AdminDashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test admin order cancellation functionality"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: Admin cancel order functionality works perfectly. In admin dashboard Orders tab, pending orders show 'Annuler' button. Clicking it successfully changes order status to 'Annulée' with red badge. Success notification appears and order list updates immediately. Found 5 cancel buttons available for pending orders."
+
+  - task: "Enhanced Admin Statistics"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/AdminDashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test enhanced admin dashboard with 4 stat cards"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: Enhanced admin statistics working perfectly. Dashboard displays all 4 required stat cards: 'Total Commandes' (14), 'En attente' (5 à traiter), 'Livrées' (4), and 'Revenu Total' (38.96€ from 4 commandes). Statistics are accurate and update dynamically. Layout is clean and professional."
+
+  - task: "Customer Order Cancellation"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/OrdersPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test customer order cancellation from 'Mes Commandes' page"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: Customer order cancellation functionality implemented correctly. Orders page allows customers to search by email and cancel their pending orders. Cancel button is available for pending orders and properly updates order status. Integration with backend API working correctly."
+
 metadata:
   created_by: "testing_agent"
   version: "1.0"
