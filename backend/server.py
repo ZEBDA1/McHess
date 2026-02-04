@@ -187,6 +187,22 @@ async def create_order(order: OrderCreate):
     if not pack:
         raise HTTPException(status_code=404, detail="Pack not found")
     
+    # Check for duplicate order (same email + pack + pending status in last 30 minutes)
+    thirty_minutes_ago = datetime.utcnow() - timedelta(minutes=30)
+    existing_order = await db.orders.find_one({
+        "customer_email": order.customer_email,
+        "pack_id": ObjectId(order.pack_id),
+        "status": "pending",
+        "created_at": {"$gte": thirty_minutes_ago}
+    })
+    
+    if existing_order:
+        order_number = str(existing_order["_id"])[-8:].upper()
+        raise HTTPException(
+            status_code=400, 
+            detail=f"Vous avez déjà une commande en attente pour ce pack (N° {order_number}). Veuillez attendre 30 minutes ou annuler l'ancienne commande."
+        )
+    
     # Create order
     order_data = {
         "pack_id": ObjectId(order.pack_id),
