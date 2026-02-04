@@ -41,10 +41,15 @@ class Pack(BaseModel):
 class OrderCreate(BaseModel):
     pack_id: str
     customer_email: EmailStr
-    paypal_email: EmailStr
 
 class OrderUpdate(BaseModel):
     status: str
+
+class PackUpdate(BaseModel):
+    name: str
+    description: str
+    points_range: str
+    price: float
 
 # Helper function to convert ObjectId to string
 def pack_helper(pack) -> dict:
