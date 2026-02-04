@@ -7,6 +7,10 @@ from datetime import datetime, timedelta
 import os
 import httpx
 from bson import ObjectId
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = FastAPI()
 
