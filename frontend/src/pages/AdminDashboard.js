@@ -355,6 +355,13 @@ export default function AdminDashboard() {
           </TabsContent>
         </Tabs>
       </div>
+      
+      <EditPackModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        pack={editingPack}
+        onSave={handleSavePack}
+      />
     </div>
   );
 }
