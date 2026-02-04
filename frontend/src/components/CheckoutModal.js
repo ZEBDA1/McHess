@@ -144,7 +144,9 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
                 
                 <div className="flex items-start gap-2">
                   <span className="font-semibold min-w-[100px]">Envoyer à:</span>
-                  <span className="font-mono bg-background px-2 py-1 rounded">zebdalerat@protonmail.com</span>
+                  <span className="font-mono bg-background px-2 py-1 rounded">
+                    {paypalEmail || 'Chargement...'}
+                  </span>
                 </div>
                 
                 <div className="flex items-start gap-2">
