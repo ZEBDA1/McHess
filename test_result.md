@@ -352,9 +352,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "New Checkout Flow (PayPal Instructions)"
-    - "Cancel Order Feature"
-    - "Admin Pack Editing"
+    - "Dark Mode Toggle"
+    - "Duplicate Order Prevention"
+    - "Modal Close Button Fix"
+    - "Admin Cancel Order"
+    - "Enhanced Admin Statistics"
+    - "Customer Order Cancellation"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
