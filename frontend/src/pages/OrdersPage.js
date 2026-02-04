@@ -20,6 +20,29 @@ export default function OrdersPage() {
     setSearched(true);
   };
 
+  const handleCancelOrder = async (order) => {
+    try {
+      await axios.put(`${API}/admin/orders/${order.orderId}`, {
+        status: 'cancelled'
+      });
+      
+      // Update localStorage
+      const storedOrders = JSON.parse(localStorage.getItem('myOrders') || '[]');
+      const updatedOrders = storedOrders.map(o => 
+        o.orderId === order.orderId ? { ...o, status: 'cancelled' } : o
+      );
+      localStorage.setItem('myOrders', JSON.stringify(updatedOrders));
+      
+      // Refresh the list
+      handleSearch();
+      
+      toast.success('Commande annulée avec succès');
+    } catch (error) {
+      console.error('Erreur lors de l\'annulation:', error);
+      toast.error('Erreur lors de l\'annulation de la commande');
+    }
+  };
+
   const getStatusBadge = (status) => {
     if (status === 'delivered') {
       return (
