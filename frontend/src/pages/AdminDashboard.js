@@ -36,6 +36,8 @@ export default function AdminDashboard() {
     pendingOrders: 0,
     totalRevenue: 0
   });
+  const [editingPack, setEditingPack] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
