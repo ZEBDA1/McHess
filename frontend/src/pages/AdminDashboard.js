@@ -67,11 +67,17 @@ export default function AdminDashboard() {
       
       // Calculate stats
       const pending = ordersRes.data.filter(o => o.status === 'pending').length;
-      const revenue = ordersRes.data.reduce((sum, o) => sum + o.amount, 0);
+      const delivered = ordersRes.data.filter(o => o.status === 'delivered').length;
+      const cancelled = ordersRes.data.filter(o => o.status === 'cancelled').length;
+      const revenue = ordersRes.data
+        .filter(o => o.status === 'delivered')
+        .reduce((sum, o) => sum + o.amount, 0);
       
       setStats({
         totalOrders: ordersRes.data.length,
         pendingOrders: pending,
+        deliveredOrders: delivered,
+        cancelledOrders: cancelled,
         totalRevenue: revenue
       });
     } catch (error) {
