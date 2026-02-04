@@ -164,6 +164,13 @@ async def startup_db():
 async def root():
     return {"message": "McHess API - Système de vente de points de fidélité"}
 
+# Get configuration (public info only)
+@app.get("/api/config")
+async def get_config():
+    return {
+        "paypal_email": PAYPAL_EMAIL
+    }
+
 # Get all packs
 @app.get("/api/packs", response_model=List[dict])
 async def get_packs():
