@@ -82,6 +82,17 @@ export const Navbar = () => {
               >
                 Mes Commandes
               </Link>
+              <div className="px-4 py-2 flex items-center justify-between">
+                <span className="font-medium">Mode sombre</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={toggleTheme}
+                  className="rounded-full"
+                >
+                  {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                </Button>
+              </div>
               <Link
                 to="/admin"
                 className="text-foreground hover:text-primary transition-colors duration-200 font-medium px-4 py-2"
