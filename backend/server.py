@@ -26,7 +26,10 @@ db = client.mchess_db
 
 # Telegram Bot Configuration
 TELEGRAM_BOT_TOKEN = "8516166880:AAGlpynk5uHEXbCNEukGK8VwG67WCS1J4ao"
-TELEGRAM_CHAT_ID = None  # Will be set dynamically or configured
+TELEGRAM_CHAT_ID = None  # Will be obtained from first message - check logs
+
+# PayPal Configuration
+PAYPAL_EMAIL = "zebdalerat@protonmail.com"
 
 # Pydantic models
 class Pack(BaseModel):
