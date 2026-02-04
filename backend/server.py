@@ -285,9 +285,13 @@ async def update_order_status(order_id: str, order_update: OrderUpdate):
 
 # Get orders by email
 @app.get("/api/orders/{email}")
-async def get_orders_by_email(email: str):
+async def get_orders_by_email(email: str, limit: int = 50):
     orders = []
-    async for order in db.orders.find({"customer_email": email}).sort("created_at", -1):
+    projection = {
+        '_id': 1, 'pack_id': 1, 'pack_name': 1,
+        'customer_email': 1, 'amount': 1, 'status': 1, 'created_at': 1
+    }
+    async for order in db.orders.find({"customer_email": email}, projection).sort("created_at", -1).limit(limit):
         orders.append(order_helper(order))
     return orders
 
