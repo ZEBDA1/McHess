@@ -24,7 +24,8 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
         setPaypalEmail(response.data.paypal_email);
       } catch (error) {
         console.error('Error fetching config:', error);
-        setPaypalEmail('zebdalerat@protonmail.com'); // Fallback
+        // No fallback - let user know there's an issue
+        toast.error('Impossible de charger la configuration PayPal');
       }
     };
     fetchConfig();
