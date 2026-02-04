@@ -175,7 +175,8 @@ async def get_config():
 @app.get("/api/packs", response_model=List[dict])
 async def get_packs():
     packs = []
-    async for pack in db.packs.find():
+    projection = {'_id': 1, 'name': 1, 'description': 1, 'points_range': 1, 'price': 1}
+    async for pack in db.packs.find({}, projection):
         packs.append(pack_helper(pack))
     return packs
 
