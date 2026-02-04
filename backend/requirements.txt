@@ -4,4 +4,5 @@ motor==3.7.0
 pydantic[email]==2.10.6
 python-multipart==0.0.20
 httpx==0.28.1
-pymongo==4.11.0python-dotenv
+pymongo==4.11.0
+python-dotenv==1.2.1
