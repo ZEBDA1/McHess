@@ -329,7 +329,7 @@ export default function AdminDashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {packs.map((pack) => (
-                <Card key={pack._id} className="border-2">
+                <Card key={pack._id} className="border-2 relative">
                   <CardHeader>
                     <CardTitle className="text-xl">{pack.name}</CardTitle>
                   </CardHeader>
@@ -339,6 +339,15 @@ export default function AdminDashboard() {
                       <p className="text-sm font-semibold">Points: {pack.points_range}</p>
                       <p className="text-2xl font-bold text-primary">{pack.price}€</p>
                     </div>
+                    <Button
+                      onClick={() => handleEditPack(pack)}
+                      variant="outline"
+                      size="sm"
+                      className="w-full mt-4"
+                    >
+                      <Edit className="w-4 h-4 mr-2" />
+                      Modifier
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
