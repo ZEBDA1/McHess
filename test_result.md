@@ -210,6 +210,51 @@ frontend:
         agent: "testing"
         comment: "✅ PASSED: Admin dashboard fully functional. Statistics display correctly (Total Commandes: 2, En attente: 1, Revenu Total: 26.98€). Orders tab shows order management with 'Marquer livrée' functionality working (shows success toast). Packs tab displays all 4 packs with correct details. Tab switching works smoothly."
 
+  - task: "New Checkout Flow (PayPal Instructions)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/CheckoutModal.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test new PayPal instructions modal with correct amount, PayPal email, and order number"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: New checkout flow works perfectly. Clicking 'Commander' opens modal, entering email (newtest@example.com) and clicking 'Créer la commande' displays PayPal instructions modal with: Montant (4.99€), PayPal email (zebdalerat@protonmail.com), and 8-character order number (6F67185B). All required elements are visible and functional."
+
+  - task: "Cancel Order Feature"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/OrdersPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test order cancellation functionality from 'Mes Commandes' page"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: Cancel order feature works correctly. After creating order with newtest@example.com, navigating to 'Mes Commandes', searching with email shows order with 'En attente' status. Clicking 'Annuler' button successfully updates status to 'Annulée' with success notification."
+
+  - task: "Admin Pack Editing"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/EditPackModal.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test admin pack editing functionality with price and description changes"
+      - working: true
+        agent: "testing"
+        comment: "✅ PASSED: Admin pack editing works perfectly. After logging in with admin/admin123, navigating to Packs tab, clicking 'Modifier' on Pack Starter opens edit modal. Successfully changed price to 5.99€ and description to 'Le meilleur pour débuter'. Changes are saved and displayed correctly with success notification."
+
 metadata:
   created_by: "testing_agent"
   version: "1.0"
