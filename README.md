@@ -69,6 +69,26 @@ Une application web moderne de vente de points de fidélité avec un design insp
 - **Gestion des packs** (visualisation)
 - **Authentification** simple (admin/admin123)
 
+## 💳 Workflow de Paiement
+
+### Pour le Client
+1. Sélectionne un pack
+2. Entre son email
+3. Clique "Créer la commande"
+4. **Reçoit les instructions PayPal**:
+   - Montant à payer
+   - Email PayPal: zebdalerat@protonmail.com
+   - N° de commande unique (ex: 6F67185E)
+5. Effectue le paiement PayPal avec le n° de commande dans la note
+6. Attend la livraison (notification par email ou vérifier "Mes Commandes")
+
+### Pour l'Administrateur
+1. **Reçoit notification Telegram** avec détails commande
+2. Vérifie le paiement PayPal (vérifie le n° de commande dans la note)
+3. Livre les points au client
+4. **Marque "Livrée"** dans le panel admin
+5. Client et admin reçoivent confirmation via Telegram
+
 ## 📦 Packs Disponibles
 
 1. **Pack Starter** - 4.99€ (25-50 points)
