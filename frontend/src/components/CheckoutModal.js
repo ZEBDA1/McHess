@@ -75,7 +75,7 @@ export const CheckoutModal = ({ isOpen, onClose, pack }) => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle className="text-2xl">Finaliser la commande</DialogTitle>
