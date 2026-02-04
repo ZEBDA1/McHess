@@ -94,6 +94,29 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleEditPack = (pack) => {
+    setEditingPack(pack);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSavePack = async (updatedPack) => {
+    try {
+      await axios.put(`${API}/admin/packs/${updatedPack._id}`, {
+        name: updatedPack.name,
+        description: updatedPack.description,
+        points_range: updatedPack.points_range,
+        price: updatedPack.price
+      });
+      
+      toast.success('Pack mis à jour avec succès');
+      setIsEditModalOpen(false);
+      fetchData();
+    } catch (error) {
+      console.error('Error updating pack:', error);
+      toast.error('Erreur lors de la mise à jour du pack');
+    }
+  };
+
   const getStatusBadge = (status) => {
     if (status === 'delivered') {
       return (
