@@ -240,14 +240,15 @@ async def update_order_status(order_id: str, order_update: OrderUpdate):
     )
     
     # Send Telegram notification
-    status_emoji = "✅" if order_update.status == "delivered" else "⏳"
-    status_text = "Livrée" if order_update.status == "delivered" else "En attente"
+    status_emoji = "✅" if order_update.status == "delivered" else "⏳" if order_update.status == "pending" else "❌"
+    status_text = "Livrée" if order_update.status == "delivered" else "En attente" if order_update.status == "pending" else "Annulée"
     
     await send_telegram_notification(
         f"{status_emoji} <b>Mise à jour Commande</b>\n"
-        f"🆔 ID: {order_id[-8:]}\n"
+        f"🆔 N° Commande: {order_id[-8:].upper()}\n"
         f"📧 Client: {order['customer_email']}\n"
         f"📦 Pack: {order['pack_name']}\n"
+        f"💰 Montant: {order['amount']}€\n"
         f"📊 Nouveau statut: {status_text}"
     )
     
