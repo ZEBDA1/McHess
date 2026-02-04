@@ -217,42 +217,35 @@ export default function AdminDashboard() {
               <p className="text-muted-foreground">Vue d'ensemble de votre activité</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="border-2">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
-                    Total Commandes
-                  </CardTitle>
-                  <ShoppingBag className="w-4 h-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold">{stats.totalOrders}</div>
-                </CardContent>
-              </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCard
+                title="Total Commandes"
+                value={stats.totalOrders}
+                icon={ShoppingBag}
+              />
 
-              <Card className="border-2">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
-                    En attente
-                  </CardTitle>
-                  <Clock className="w-4 h-4 text-warning" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-warning">{stats.pendingOrders}</div>
-                </CardContent>
-              </Card>
+              <StatCard
+                title="En attente"
+                value={stats.pendingOrders}
+                icon={Clock}
+                change={`${stats.pendingOrders} à traiter`}
+                trend={stats.pendingOrders > 0 ? 'up' : 'neutral'}
+              />
 
-              <Card className="border-2">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
-                    Revenu Total
-                  </CardTitle>
-                  <DollarSign className="w-4 h-4 text-success" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold text-success">{stats.totalRevenue.toFixed(2)}€</div>
-                </CardContent>
-              </Card>
+              <StatCard
+                title="Livrées"
+                value={stats.deliveredOrders}
+                icon={CheckCircle}
+                trend="up"
+              />
+
+              <StatCard
+                title="Revenu Total"
+                value={`${stats.totalRevenue.toFixed(2)}€`}
+                icon={DollarSign}
+                change={`${stats.deliveredOrders} commandes`}
+                trend="up"
+              />
             </div>
 
             {/* Recent Orders */}
