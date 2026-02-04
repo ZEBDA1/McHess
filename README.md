@@ -2,6 +2,50 @@
 
 Une application web moderne de vente de points de fidélité avec un design inspiré du fast-food.
 
+# McHess - Plateforme de Vente de Points de Fidélité 🍔
+
+Une application web moderne de vente de points de fidélité avec un design inspiré du fast-food.
+
+## 🎉 Nouvelles Fonctionnalités Ajoutées
+
+### ✅ Instructions PayPal Intégrées
+- **Email PayPal configuré**: zebdalerat@protonmail.com
+- **Numéro de commande unique** généré automatiquement (8 caractères)
+- **Instructions claires** affichées après création de commande
+- **Workflow simplifié**: Client crée commande → Voit instructions → Paie sur PayPal
+
+### ✅ Annulation de Commandes
+- Les clients peuvent annuler leurs commandes en attente
+- Bouton "Annuler" disponible dans "Mes Commandes"
+- Mise à jour automatique du statut → "Annulée"
+- Notification Telegram envoyée lors de l'annulation
+
+### ✅ Modification des Packs (Admin)
+- **Interface d'édition complète** dans le panel admin
+- Modifier: nom, description, prix, points
+- **Validation des données** côté client et serveur
+- **Notifications Telegram** pour chaque modification
+
+### ✅ Notifications Telegram Automatiques
+- **Détection automatique du Chat ID** (plus de configuration manuelle !)
+- **5 types de notifications** configurées
+- **Bot username**: @mchesss_bot
+- **Intégration complète** avec toutes les actions
+
+## 🆕 Bot Telegram
+
+### Configuration Ultra-Simple
+1. Recherchez **@mchesss_bot** sur Telegram
+2. Envoyez n'importe quel message (ex: "/start")
+3. **C'EST TOUT !** Le système détectera automatiquement votre Chat ID
+
+### Notifications Reçues
+- 🚀 Démarrage du système
+- 🛒 Nouvelle commande (avec n° commande et email PayPal)
+- ✅ Commande livrée
+- ❌ Commande annulée
+- ✏️ Pack modifié (admin)
+
 ## 🎯 Fonctionnalités
 
 ### Frontend (Client)
