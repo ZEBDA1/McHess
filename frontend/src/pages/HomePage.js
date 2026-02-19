@@ -140,12 +140,16 @@ export default function HomePage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {packs.map((pack) => (
-                <PackCard
+              {packs.map((pack, index) => (
+                <div 
                   key={pack._id}
-                  pack={pack}
-                  onBuyNow={handleBuyNow}
-                />
+                  className={`animate-fade-in-delay-${Math.min(index, 3)}`}
+                >
+                  <PackCard
+                    pack={pack}
+                    onBuyNow={handleBuyNow}
+                  />
+                </div>
               ))}
             </div>
           )}
