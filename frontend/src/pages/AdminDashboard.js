@@ -116,6 +116,27 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleDeliverOrder = async (orderId, deliveryInfo) => {
+    try {
+      await axios.put(`${API}/admin/orders/${orderId}/deliver`, {
+        delivery_info: deliveryInfo
+      });
+      
+      toast.success('Commande livrée avec succès !');
+      setIsDeliverModalOpen(false);
+      fetchData();
+    } catch (error) {
+      console.error('Error delivering order:', error);
+      toast.error('Erreur lors de la livraison');
+      throw error;
+    }
+  };
+
+  const openDeliverModal = (order) => {
+    setDeliveringOrder(order);
+    setIsDeliverModalOpen(true);
+  };
+
   const handleEditPack = (pack) => {
     setEditingPack(pack);
     setIsEditModalOpen(true);
