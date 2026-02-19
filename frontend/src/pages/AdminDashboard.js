@@ -185,6 +185,18 @@ export default function AdminDashboard() {
     );
   };
 
+  // Filter orders based on search and status
+  const filteredOrders = orders.filter(order => {
+    const matchesSearch = 
+      order.customer_email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.pack_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order._id.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
+    
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
