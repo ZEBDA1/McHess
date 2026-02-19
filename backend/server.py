@@ -74,6 +74,8 @@ def order_helper(order) -> dict:
         "customer_email": order["customer_email"],
         "amount": order["amount"],
         "status": order["status"],
+        "delivery_info": order.get("delivery_info", ""),
+        "delivered_at": order.get("delivered_at", ""),
         "created_at": order["created_at"].isoformat() if isinstance(order["created_at"], datetime) else order["created_at"]
     }
 
