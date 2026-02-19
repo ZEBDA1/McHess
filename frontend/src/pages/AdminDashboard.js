@@ -322,15 +322,51 @@ export default function AdminDashboard() {
 
           {/* Orders Tab */}
           <TabsContent value="orders" className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div>
                 <h2 className="text-3xl font-bold mb-2">Commandes</h2>
                 <p className="text-muted-foreground">Gérez toutes vos commandes</p>
               </div>
             </div>
 
+            {/* Filters */}
+            <Card className="border-2">
+              <CardContent className="p-4">
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex-1">
+                    <div className="relative">
+                      <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Rechercher par email, pack ou ID..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="pl-10"
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full md:w-48">
+                    <Select value={statusFilter} onValueChange={setStatusFilter}>
+                      <SelectTrigger>
+                        <Filter className="w-4 h-4 mr-2" />
+                        <SelectValue placeholder="Statut" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Tous les statuts</SelectItem>
+                        <SelectItem value="pending">En attente</SelectItem>
+                        <SelectItem value="delivered">Livrées</SelectItem>
+                        <SelectItem value="cancelled">Annulées</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="mt-3 text-sm text-muted-foreground">
+                  {filteredOrders.length} commande(s) trouvée(s)
+                </div>
+              </CardContent>
+            </Card>
+
             <div className="space-y-4">
-              {orders.map((order) => (
+              {filteredOrders.map((order) => (
                 <Card key={order._id} className="border-2">
                   <CardContent className="p-6">
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
