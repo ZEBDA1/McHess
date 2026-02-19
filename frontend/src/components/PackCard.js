@@ -8,13 +8,13 @@ export const PackCard = ({ pack, onBuyNow }) => {
   const isPopular = pack.points_range === '50-75';
   
   return (
-    <Card className="pack-card relative overflow-hidden border-2 hover:border-primary/50">
+    <Card className="pack-card relative overflow-hidden border-2 hover:border-primary/50 group">
       {isPopular && (
-        <div className="absolute top-4 right-4">
-          <Badge className="bg-secondary text-secondary-foreground shadow-md">
-            <Zap className="w-3 h-3 mr-1" />
-            Populaire
-          </Badge>
+        <div className="absolute top-0 right-0 left-0">
+          <div className="bg-gradient-primary text-white px-4 py-2 text-center font-bold text-sm shadow-lg">
+            <Zap className="w-4 h-4 inline mr-1" />
+            LE PLUS POPULAIRE
+          </div>
         </div>
       )}
       
