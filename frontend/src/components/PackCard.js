@@ -18,8 +18,8 @@ export const PackCard = ({ pack, onBuyNow }) => {
         </div>
       )}
       
-      <CardHeader className="text-center pb-4">
-        <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+      <CardHeader className="text-center pb-4" style={{ marginTop: isPopular ? '3rem' : '0' }}>
+        <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
           <span className="text-3xl font-bold text-white">{pack.points_range.split('-')[0]}</span>
         </div>
         <h3 className="text-2xl font-bold mb-2">{pack.name}</h3>
