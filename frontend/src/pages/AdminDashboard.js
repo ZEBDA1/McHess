@@ -396,11 +396,11 @@ export default function AdminDashboard() {
                         {order.status === 'pending' && (
                           <div className="flex gap-2">
                             <Button
-                              onClick={() => handleUpdateOrderStatus(order._id, 'delivered')}
+                              onClick={() => openDeliverModal(order)}
                               className="bg-success text-success-foreground hover:bg-success/90"
                               size="sm"
                             >
-                              <CheckCircle className="w-4 h-4 mr-2" />
+                              <Send className="w-4 h-4 mr-2" />
                               Livrer
                             </Button>
                             <Button
