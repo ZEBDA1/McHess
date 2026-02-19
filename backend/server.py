@@ -56,6 +56,9 @@ class PackUpdate(BaseModel):
     points_range: str
     price: float
 
+class DeliverOrder(BaseModel):
+    delivery_info: str
+
 # Helper function to convert ObjectId to string
 def pack_helper(pack) -> dict:
     return {
