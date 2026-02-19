@@ -333,6 +333,37 @@ async def update_pack(pack_id: str, pack_update: PackUpdate):
     
     return {"message": "Pack updated successfully"}
 
+# Deliver order with info (admin)
+@app.put("/api/admin/orders/{order_id}/deliver")
+async def deliver_order(order_id: str, deliver_data: DeliverOrder):
+    order = await db.orders.find_one({"_id": ObjectId(order_id)})
+    if not order:
+        raise HTTPException(status_code=404, detail="Order not found")
+    
+    # Update order with delivery info
+    await db.orders.update_one(
+        {"_id": ObjectId(order_id)},
+        {"$set": {
+            "status": "delivered",
+            "delivery_info": deliver_data.delivery_info,
+            "delivered_at": datetime.utcnow()
+        }}
+    )
+    
+    # Send Telegram notification
+    order_number = order_id[-8:].upper()
+    await send_telegram_notification(
+        f"✅ <b>Commande Livrée</b>\n"
+        f"🆔 N° Commande: {order_number}\n"
+        f"📧 Client: {order['customer_email']}\n"
+        f"📦 Pack: {order['pack_name']}\n"
+        f"💰 Montant: {order['amount']}€\n"
+        f"📝 Informations livrées:\n"
+        f"<code>{deliver_data.delivery_info[:100]}...</code>"
+    )
+    
+    return {"message": "Order delivered successfully"}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
