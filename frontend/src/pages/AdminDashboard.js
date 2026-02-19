@@ -466,6 +466,13 @@ export default function AdminDashboard() {
         pack={editingPack}
         onSave={handleSavePack}
       />
+      
+      <DeliverOrderModal
+        isOpen={isDeliverModalOpen}
+        onClose={() => setIsDeliverModalOpen(false)}
+        order={deliveringOrder}
+        onDeliver={handleDeliverOrder}
+      />
     </div>
   );
 }
