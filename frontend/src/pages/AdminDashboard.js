@@ -50,6 +50,10 @@ export default function AdminDashboard() {
   });
   const [editingPack, setEditingPack] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [deliveringOrder, setDeliveringOrder] = useState(null);
+  const [isDeliverModalOpen, setIsDeliverModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
 
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
